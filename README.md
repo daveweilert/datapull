@@ -35,40 +35,117 @@ pull4001i - DB Record count: 0</b>
 Configuration file
 ================================================================================
 
-The configuration file defines the required and optional processing parameters needed to load the data.  The file is formatted using JSON (JavaScript Object Notation).  Below is an example of a configuration file defined with the <b>minimum</b> set of parameters:
+The configuration file defines the required processing parameters needed to pull the data.  The file is formatted using JSON (JavaScript Object Notation).  Below is an example of a configuration file defined with the <b>minimum</b> set of parameters:
 
-	{		
-  	  "database"  : { "dbname":"doctors", "url":"http://localhost:5984" },
-      "inputfile" : { "filename":"/Users/daveweilert/GitHub/dataloader/example/000003_Data_File_TAB.txt"} 
-    }
+{
+    "inputDB":
+    {
+        "dbname" : "tweets",
+        "username": "",
+        "password": "",
+        "host": "",
+        "port": 443,
+        "url": "https://bluemix.cloudant.com"
+    },
+
+    "fields": [
+      {"field": "payload.tweet"},  
+      {"field": "payload.score"},
+      {"field": "payload.location"}
+    ],
+
+    "outputFile" : "data.csv"
+  }
 
 <b>Note</b> the use of double quotes, curly brackets, colons, commas, etc. in the definition of the parameter values. These are required to create a properly formatted JSON file.  Additional information regarding valid JSON can be obtained at: <http://www.json.org>
-
-The above configuration file is using the "inputfile" parameter defaults a.) tab delimited fields b.) first record contains the field names, and c.) all input fields will be loaded. 
 
 <br>
 
 ## Parameters
 
-The key parameter and sub-parameters are case sensitive and only use lower case characters to define the values.  The users values that are provided for each parameter are not required to be lower case.  The following tables lists the parameter, required or optional, valid values, default value, description, sub-parameters, and example(s).  
+The key parameter and sub-parameters are case sensitive sensitive.  The following tables lists the parameter, required or optional, valid values, default value, description, sub-parameters, and example(s).  
 <br>
 
-### "batchsize"
+### "inputDB"
 
 | Req/Opt | Valid Value(s) | Default | Description |
 | :----:  | -----          | :----:  | -----       |
-| Opt | whole number greater than zero | 5000 | Defines the number of records that will be batched and passed to the database to be inserted.
+| REQ | sub-params  | N/A | Required parameter for the input database.  This parameter contains required sub-parameters.
 
-Sub-parameters: NONE
+
+Sub-parameters:
+
+
+| Sub-Parameter | Req/Opt | Valid Value(s) | Default | Description |
+| :-------: | :----:  | -----        | :----:  | -----       |
+| "create" | Opt | <b>true</b> or <b>false</b> | false | true = Create a new instance of the database.  If the database already exits delete the current instance and create a new instance. <br> false = Insert records into an existing database. Do not create a new instance of the database if one does not exist.  
+| "dbname" | Req | string | N/A | Name of the database. 
+| "url" | Req | string | none | Url where the database is located. 
+
+
 
 Example: 
 <br>
-1 - Create batch of 5000 records
+1 - Create new instance of a database named 'doctors' using Apache CouchDB installed locally. 
+<br>
+<b>
+
+    "inputDB":  
+     { 
+        "dbname"  : "tweets",
+        "url"     : "http://localhost:5984"
+     }
+</b>
+
+2 - Insert into an existing database named 'costs' using IBM Cloudant running in IBM Bluemix.
 <b>
 <br>
 
-      "batchsize": 5000
+
+    "inputDB":  
+     { 
+        "dbname"  : "tweets",
+        "url"     : "https://20c66bd5-459f-dc77-dc77-a286897f74ec-bluemix:6a0864d88250269e2988b43391fa6b054c5ab3688ef8b58c7668a6cf32cc6611@20c66bd5-dc77-459f-a24d-a286897f74ec-bluemix.cloudant.com"
+
+     }
+
 </b>
+
+
 
 <br>
 
+### "outputFile"
+
+| Req/Opt | Valid Value(s) | Default | Description |
+| :----:  | -----          | :----:  | -----       |
+| REQ | file name | none | Defines the name of the output file where the CSV data will be written. 
+
+
+
+Example: 
+<br>
+1 - Output to fully qualified path
+<br>
+<b>
+    "outputfile": "/Users/daveweilert/data_out.txt"
+
+</b>
+
+<br>
+2 - Output to directory where program is executed from.
+<br>
+<b>
+    "outputfile": "data_out.txt"
+
+</b>
+
+#### Windows file output
+
+If using Windows operating system the output file name can use  the drive letter and <b>must</b> use the forward slash syntax:
+
+Example:  "filename"    : "D:/Users/daveweilert/data_out.txt"
+
+Optionally for Windows the use the './' or '~' syntax are permitted instead of the drive letter syntax. 
+
+<br>
