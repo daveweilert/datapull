@@ -9,7 +9,6 @@
   "author": "Dave Weilert",
   "license": "MIT",
   "dependencies": {
-    "Q": "0.0.1",
     "cloudant": "^1.8.0",
     "fs": "0.0.1-security",
     "json2csv": "^3.9.0",
