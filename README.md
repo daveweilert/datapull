@@ -85,7 +85,7 @@ Sub-parameters:
 
 Example: 
 <br>
-1 - Create new instance of a database named 'doctors' using Apache CouchDB installed locally. 
+1 - Pull data from database named 'tweets' using Apache CouchDB installed locally. 
 <br>
 <b>
 
@@ -96,7 +96,7 @@ Example:
      }
 </b>
 
-2 - Insert into an existing database named 'costs' using IBM Cloudant running in IBM Bluemix.
+2 - Pull data from database named 'tweets' using IBM Cloudant running in IBM Bluemix.
 <b>
 <br>
 
@@ -124,7 +124,7 @@ Example:
 
 Example: 
 <br>
-1 - Output to fully qualified path
+1 - Output file using a fully qualified path and file name
 <br>
 <b>
 
@@ -133,7 +133,7 @@ Example:
 </b>
 
 <br>
-2 - Output to directory where program is executed from.
+2 - Output to the same directory where program is executed from
 <br>
 <b>
 
@@ -180,7 +180,7 @@ Sub-parameters:
 
 Example: 
 <br>
-1 - Pull data fields from document.
+1 - Pull data fields from document. 
 <br>
 <b>
 
