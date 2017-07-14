@@ -165,7 +165,7 @@ Sub-parameters:
 | :-------: | :----:  | -----        | :----:  | -----       |
 | "filed" | REQ | N/A | string | Value that defines the full JSON path the data 
 
-Sample document:
+### Sample document:
 
     { "firstname": "Dave",
        "lastname": "Weilert",
@@ -228,17 +228,17 @@ npm start C:\Users\daveweilert\files\config.json
 
 Example console output: 
 ================================================================================
-pull0000i - Looking for configuration file
-pull0002i - Parameter "inputDB" located
-pull0002i - Parameter "inputDB.dbname" tweets
-pull0002i - Parameter "inputDB.url" https://bluemix.cloudant.com
-pull0002i - Parameter "outputFile" data.csv
-pull0002i - Parameter "fields" [{"field":"payload.tweet"},{"field":"payload.score"},{"field":"payload.location"}]
-pull0012i - Initialized DB: tweets
-pull4000i - Retrieving data from database
-pull4001i - DB Record count: 41441
-pull0020i - Output to CSV file: data.csv  -  fields: payload.tweet payload.score payload.location
-pull00221 - Output complete 
+    pull0000i - Looking for configuration file
+    pull0002i - Parameter "inputDB" located
+    pull0002i - Parameter "inputDB.dbname" tweets
+    pull0002i - Parameter "inputDB.url" https://bluemix.cloudant.com
+    pull0002i - Parameter "outputFile" data.csv
+    pull0002i - Parameter "fields" [{"field":"payload.tweet"},{"field":"payload.score"},{"field":"payload.location"}]
+    pull0012i - Initialized DB: tweets
+    pull4000i - Retrieving data from database
+    pull4001i - DB Record count: 41441
+    pull0020i - Output to CSV file: data.csv  -  fields: payload.tweet payload.score payload.location
+    pull00221 - Output complete 
 
 
 
