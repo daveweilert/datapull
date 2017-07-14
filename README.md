@@ -37,24 +37,24 @@ Configuration file
 
 The configuration file defines the required processing parameters needed to pull the data.  The file is formatted using JSON (JavaScript Object Notation).  Below is an example of a configuration file defined with the <b>minimum</b> set of parameters:
 
-{
-    "inputDB":
     {
+    "inputDB":
+      {
         "dbname" : "tweets",
         "username": "",
         "password": "",
         "host": "",
         "port": 443,
-        "url": "https://bluemix.cloudant.com"
-    },
+        "url":"https://bluemix.cloudant.com"
+      },
 
-    "fields": [
-      {"field": "payload.tweet"},  
-      {"field": "payload.score"},
-      {"field": "payload.location"}
-    ],
+      "fields": [
+        {"field": "payload.tweet"},  
+        {"field": "payload.score"},
+        {"field": "payload.location"}
+      ],
 
-    "outputFile" : "data.csv"
+      "outputFile" : "data.csv"
   }
 
 <b>Note</b> the use of double quotes, curly brackets, colons, commas, etc. in the definition of the parameter values. These are required to create a properly formatted JSON file.  Additional information regarding valid JSON can be obtained at: <http://www.json.org>
