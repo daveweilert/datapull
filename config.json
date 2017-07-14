@@ -1,0 +1,19 @@
+{
+    "inputDB":
+    {
+        "dbname" : "tweets",
+        "username": "",
+        "password": "",
+        "host": "",
+        "port": 443,
+        "url": "https://bluemix.cloudant.com"
+    },
+
+    "fields": [
+      {"field": "payload.tweet"},  
+      {"field": "payload.score"},
+      {"field": "payload.location"}
+    ],
+
+    "outputFile" : "data.csv"
+  }
