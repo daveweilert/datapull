@@ -55,7 +55,7 @@ The configuration file defines the required processing parameters needed to pull
       ],
 
       "outputFile" : "data.csv"
-  }
+    }
 
 <b>Note</b> the use of double quotes, curly brackets, colons, commas, etc. in the definition of the parameter values. These are required to create a properly formatted JSON file.  Additional information regarding valid JSON can be obtained at: <http://www.json.org>
 
@@ -77,8 +77,7 @@ Sub-parameters:
 
 
 | Sub-Parameter | Req/Opt | Valid Value(s) | Default | Description |
-| :-------: | :----:  | -----        | :----:  | -----       |
-| "create" | Opt | <b>true</b> or <b>false</b> | false | true = Create a new instance of the database.  If the database already exits delete the current instance and create a new instance. <br> false = Insert records into an existing database. Do not create a new instance of the database if one does not exist.  
+| :-------: | :----:  | -----        | :----:  | -----       | 
 | "dbname" | Req | string | N/A | Name of the database. 
 | "url" | Req | string | none | Url where the database is located. 
 
@@ -128,6 +127,7 @@ Example:
 1 - Output to fully qualified path
 <br>
 <b>
+
     "outputfile": "/Users/daveweilert/data_out.txt"
 
 </b>
@@ -136,6 +136,7 @@ Example:
 2 - Output to directory where program is executed from.
 <br>
 <b>
+
     "outputfile": "data_out.txt"
 
 </b>
@@ -149,3 +150,124 @@ Example:  "filename"    : "D:/Users/daveweilert/data_out.txt"
 Optionally for Windows the use the './' or '~' syntax are permitted instead of the drive letter syntax. 
 
 <br>
+<br>
+
+### "fields"
+
+| Req/Opt | Valid Value(s) | Default | Description |
+| :----:  | -----          | :----:  | -----       |
+| REQ | sub-parms | N/A | Defines the input fields from the database that are to be pulled. 
+
+Sub-parameters:
+
+
+| Sub-Parameter | Req/Opt | Valid Value(s) | Default | Description |
+| :-------: | :----:  | -----        | :----:  | -----       |
+| "filed" | REQ | N/A | string | Value that defines the full JSON path the data 
+
+Sample document:
+
+    { "firstname": "Dave",
+       "lastname": "Weilert",
+       "description" :
+          {
+            "eyecolor": "blue",
+            "haircolor": "brown"
+          }
+    
+    }
+
+
+Example: 
+<br>
+1 - Pull data fields from document.
+<br>
+<b>
+
+    "fields": 
+      {
+        "field"    : "firstname",
+        "field"    : "lastname"
+        "field"    : "description.eyecolor",
+        "field"    : "description.haircolor"
+      }
+
+</b>
+
+
+
+Running datapull
+================================================================================
+
+### Processing output log
+
+As the application is executing processing messages are written to the console.  
+
+### Run time parameters at start
+
+The node.js application is delivered to use the npm command to execute the dataloader application.  Examples of starting the program with or without the configuration file parameter follow:
+
+  npm start    (without a configuration file will use the default config.json file located in the directory where this command was executed)
+
+	Using three parameters:
+
+	npm start ./config_4.json
+
+The third parameter is the configuration file name.  The parameter can be defined with the complete path to the configuration file or use 'from' , 'home', or  'drive letter' syntax:
+
+#### from example
+npm start ./example/config.json  (will look for the file from the current path)
+
+#### home example
+npm start ~/example/config.json  (will look for the file from the user home path)
+
+#### drive letter example  (Windows only operating system support)
+npm start C:\Users\daveweilert\files\config.json  
+
+
+
+Example console output: 
+================================================================================
+pull0000i - Looking for configuration file
+pull0002i - Parameter "inputDB" located
+pull0002i - Parameter "inputDB.dbname" tweets
+pull0002i - Parameter "inputDB.url" https://bluemix.cloudant.com
+pull0002i - Parameter "outputFile" data.csv
+pull0002i - Parameter "fields" [{"field":"payload.tweet"},{"field":"payload.score"},{"field":"payload.location"}]
+pull0012i - Initialized DB: tweets
+pull4000i - Retrieving data from database
+pull4001i - DB Record count: 41441
+pull0020i - Output to CSV file: data.csv  -  fields: payload.tweet payload.score payload.location
+pull00221 - Output complete 
+
+
+
+
+
+Maintainer
+================================================================================
+
+ Dave Weilert
+
+http://github.com/daveweilert/datapull.git/
+
+<b>datapull</b> was created as the result of needing a tool to extract data quickly and easily into IBM Cloudant and Apache CouchDB and place the data in a CSV file.
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
