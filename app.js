@@ -122,7 +122,7 @@ function initProgram() {
                             appendData(customData)
                                 .then(function(result) {
                                     firstTime = false;
-                                    console.log('cpul009i - Using custom output column names: ' + data);
+                                    //console.log('cpul009i - Using custom output column names: ' + data);
                                 })
                                 .catch(function() {
                                     deferred.reject();
@@ -321,6 +321,10 @@ function checkCustomColumns() {
             } else {
                 customData = customData + delimiter + quote + name + quote;
             }
+        }
+
+        if (customColumns) {
+                console.log('cpul009i - Using custom output column names: ' + customData);
         }
 }
 
