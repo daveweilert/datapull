@@ -1,19 +1,22 @@
 {
-    "inputDB":
+    "batchsize": 5000,
+   
+    "database":
     {
         "dbname" : "tweets",
-        "username": "",
-        "password": "",
-        "host": "",
-        "port": 443,
         "url": "https://bluemix.cloudant.com"
+ 
     },
 
+    "delimiter" : "tab",
+
     "fields": [
-      {"field": "payload.tweet"},  
-      {"field": "payload.score"},
-      {"field": "payload.location"}
+      {"field": "payload.tweet", "outname":"tweet"},  
+      {"field": "payload.score", "outname":"score"},
+      {"field": "payload.location", "outname": "location"}
     ],
 
-    "outputFile" : "data.csv"
+    "outputFile" : "data.csv",
+
+    "quote": "double"
   }

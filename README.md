@@ -72,7 +72,7 @@ The key parameter and sub-parameters are case sensitive sensitive.  The followin
 
 | Req/Opt | Valid Value(s) | Default | Description |
 | :----:  | -----          | :----:  | -----       |
-| Opt | whole number greater than zero | 5000 | Defines the number of records that will be batched and passed to the database to be inserted.
+| Opt | whole number greater than zero | 5000 | Defines the number of records that will be batched and pulled from the database.
 
 Sub-parameters: NONE
 
