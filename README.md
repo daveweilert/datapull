@@ -38,13 +38,11 @@ Configuration file
 The configuration file defines the required processing parameters needed to pull the data.  The file is formatted using JSON (JavaScript Object Notation).  Below is an example of a configuration file defined with the <b>minimum</b> set of parameters:
 
     {
-    "inputDB":
+    'batchsize": 5000,
+
+    "database":
       {
         "dbname" : "tweets",
-        "username": "",
-        "password": "",
-        "host": "",
-        "port": 443,
         "url":"https://bluemix.cloudant.com"
       },
 
@@ -54,7 +52,9 @@ The configuration file defines the required processing parameters needed to pull
         {"field": "payload.location"}
       ],
 
-      "outputFile" : "data.csv"
+      "outputFile" : "data.csv",
+    
+      "quote": "double"
     }
 
 <b>Note</b> the use of double quotes, curly brackets, colons, commas, etc. in the definition of the parameter values. These are required to create a properly formatted JSON file.  Additional information regarding valid JSON can be obtained at: <http://www.json.org>
@@ -66,7 +66,28 @@ The configuration file defines the required processing parameters needed to pull
 The key parameter and sub-parameters are case sensitive sensitive.  The following tables lists the parameter, required or optional, valid values, default value, description, sub-parameters, and example(s).  
 <br>
 
-### "inputDB"
+<br>
+
+### "batchsize"
+
+| Req/Opt | Valid Value(s) | Default | Description |
+| :----:  | -----          | :----:  | -----       |
+| Opt | whole number greater than zero | 5000 | Defines the number of records that will be batched and passed to the database to be inserted.
+
+Sub-parameters: NONE
+
+Example: 
+<br>
+1 - Create batch of 5000 records
+<b>
+<br>
+
+      "batchsize": 5000
+</b>
+
+<br>
+
+### "database"
 
 | Req/Opt | Valid Value(s) | Default | Description |
 | :----:  | -----          | :----:  | -----       |
@@ -110,46 +131,33 @@ Example:
 
 </b>
 
-
-
 <br>
 
-### "outputFile"
+### "delimiter"
 
 | Req/Opt | Valid Value(s) | Default | Description |
-| :----:  | -----          | :----:  | -----       |
-| REQ | file name | none | Defines the name of the output file where the CSV data will be written. 
-
-
+| :----:  | -----        | :----:  | -----       |
+| Opt | tab, comma, or user defined | comma | Value used to separate the output fields.    
 
 Example: 
 <br>
-1 - Output file using a fully qualified path and file name
+1 - Use tab to delimit fields.
 <br>
 <b>
 
-    "outputfile": "/Users/daveweilert/data_out.txt"
+    "delimiter": "tab" 
 
 </b>
 
 <br>
-2 - Output to the same directory where program is executed from
+2 - Use characters '@#@' to delimit fields.
 <br>
 <b>
 
-    "outputfile": "data_out.txt"
+    "delimiter": "@#@" 
 
 </b>
 
-#### Windows file output
-
-If using Windows operating system the output file name can use  the drive letter and <b>must</b> use the forward slash syntax:
-
-Example:  "filename"    : "D:/Users/daveweilert/data_out.txt"
-
-Optionally for Windows the use the './' or '~' syntax are permitted instead of the drive letter syntax. 
-
-<br>
 <br>
 
 ### "fields"
@@ -194,6 +202,68 @@ Example:
 
 </b>
 
+
+### "outputFile"
+
+| Req/Opt | Valid Value(s) | Default | Description |
+| :----:  | -----          | :----:  | -----       |
+| REQ | file name | none | Defines the name of the output file where the CSV data will be written. 
+
+Example: 
+<br>
+1 - Output file using a fully qualified path and file name
+<br>
+<b>
+
+    "outputfile": "/Users/daveweilert/data_out.txt"
+
+</b>
+
+<br>
+2 - Output to the same directory where program is executed from
+<br>
+<b>
+
+    "outputfile": "data_out.txt"
+
+</b>
+
+#### Windows file output
+
+If using Windows operating system the output file name can use  the drive letter and <b>must</b> use the forward slash syntax:
+
+Example:  "filename"    : "D:/Users/daveweilert/data_out.txt"
+
+Optionally for Windows the use the './' or '~' syntax are permitted instead of the drive letter syntax. 
+
+<br>
+
+### "quote"
+
+| Req/Opt | Valid Value(s) | Default | Description |
+| :----:  | -----        | :----:  | -----       |
+| Opt | single, double, or user defined | comma | Value used to enclose output fields.    
+
+Example: 
+<br>
+1 - Use single quote to enclose fields.
+<br>
+<b>
+
+    "quote": "single" 
+
+</b>
+
+<br>
+2 - Use characters '||' to enclose fields.
+<br>
+<b>
+
+    "quote": "||" 
+
+</b>
+
+<br>
 
 
 Running datapull
