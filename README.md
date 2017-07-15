@@ -334,7 +334,7 @@ Maintainer
 
 http://github.com/daveweilert/datapull.git/
 
-<b>datapull</b> was created as the result of needing a tool to extract data quickly and easily into IBM Cloudant and Apache CouchDB and place the data in a CSV file.
+<b>datapull</b> was created as the result of needing a tool to extract data quickly from IBM Cloudant or Apache CouchDB and output the data into a delimited file.
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
