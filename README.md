@@ -91,7 +91,7 @@ Example:
 
 | Req/Opt | Valid Value(s) | Default | Description |
 | :----:  | -----          | :----:  | -----       |
-| REQ | sub-params  | N/A | Required parameter for the input database.  This parameter contains required sub-parameters.
+| Req | sub-params  | N/A | Required parameter for the input database.  This parameter contains required sub-parameters.
 
 
 Sub-parameters:
@@ -164,14 +164,15 @@ Example:
 
 | Req/Opt | Valid Value(s) | Default | Description |
 | :----:  | -----          | :----:  | -----       |
-| REQ | sub-parms | N/A | Defines the input fields from the database that are to be pulled. 
+| Req | sub-parms | N/A | Defines the input fields from the database that are to be pulled. 
 
 Sub-parameters:
 
 
 | Sub-Parameter | Req/Opt | Valid Value(s) | Default | Description |
 | :-------: | :----:  | -----        | :----:  | -----       |
-| "filed" | REQ | N/A | string | Value that defines the full JSON path the data 
+| "field" | Req | N/A | string | Value that defines the full JSON path the data to be pulled from the document.
+| "outname" | Opt | N/A | string | Value that defines the name of the column for this associated field.
 
 ### Sample document:
 
@@ -192,14 +193,12 @@ Example:
 <br>
 <b>
 
-    "fields": 
-      {
-        "field"    : "firstname",
-        "field"    : "lastname"
-        "field"    : "description.eyecolor",
-        "field"    : "description.haircolor"
-      }
-
+    "fields": [
+      {"field": "firstname", "outname": "First"},
+      {"field": "lastname", "outname": "Last"},
+      {"field": "description.eyecolor", "outname": "Eyes"},
+      {"field": "description.haircolor", "outname": "Name"}
+    ]
 </b>
 
 
