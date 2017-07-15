@@ -297,28 +297,31 @@ npm start C:\Users\daveweilert\files\config.json
 
 Example console output: 
 ================================================================================
-      pull000i - Looking for configuration file
-      pull002i - Parameter "database" located
-      pull002i - Parameter "database.dbname" value is: tweets
-      pull002i - Parameter "database.url" value is: https://bluemix.cloudant.com
-      pull002i - Parameter "outputFile" value is: data.csv
-      pull002i - Parameter "delimiter" value is: tab
-      pull002i - Parameter "quote" value is: double
-      pull002i - Parameter "fields" value is: [{"field":"payload.tweet", ... }]
-      pull012i - Initialized DB: tweets
-      pull080i - Retrieving data from database
-      pull041i - Cleared outupt file data.csv
-      pull004i - Output file opened
-      pull400i - Total database records pulled: 5000
-      pull400i - Total database records pulled: 10000
-      pull400i - Total database records pulled: 15000
-      pull400i - Total database records pulled: 20000
-      pull400i - Total database records pulled: 25000
-      pull400i - Total database records pulled: 30000
-      pull400i - Total database records pulled: 35000
-      pull400i - Total database records pulled: 40000
-      pull400i - Total database records pulled: 42988
-      pull006i - Data pull complete
+      cpul000i - Runtime OpSys: darwin  Home: /Users/daveweilert
+      cpul001i - Start Parameter: 0: /usr/local/bin/node
+      cpul001i - Start Parameter: 1: /Users/daveweilert/nodejs/datapull/app.js
+      cpul003i - Loading parameters from DEFAULT configuration file: config.json
+      cpul200i - Parameter "database" located
+      cpul202i - Parameter "database.dbname" value is: tweets
+      cpul204i - Parameter "database.url" value is: https://aaa6bd5  ... dc87-459f-a24d-a287797f74ec-bluemix.cloudant.com
+      cpul206i - Parameter "outputFile" value is: data.csv
+      cpul208i - Parameter "delimiter" value is: tab
+      cpul210i - Parameter "quote" value is: double
+      cpul214i - Parameter "fields" value is: [{"field":"payload.tweet", ... "field":"payload.location","outname":"location"}]
+      cpul217i - Parameter "batchsize" value is: 15000
+      cpul011i - Initialized DB: tweets
+      cpul004i - Retrieving data from database
+      cpul410i - Cleared outupt file data.csv
+      cpul403i - Output file opened
+      cpul400i - Total database records pulled: 15000
+      cpul400i - Total database records pulled: 30000
+      cpul400i - Total database records pulled: 44111
+      cpul909i - Start date/time           : Sat Jul 15 2017 08:19:07 GMT-0500 (CDT)
+      cpul901i - End date/time             : Sat Jul 15 2017 08:19:23 GMT-0500 (CDT)
+      cpul902i - Elapsed time              : 0:16.226 (MM:SS.mmm)
+      cpul903i - Average Time/Record       : 0.36784475527646165 milliseconds
+      cpul999i - Program completed
+
 
 
 
