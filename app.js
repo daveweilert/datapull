@@ -49,7 +49,11 @@ var batchsize = 5000;
 var skip = 0;
 var cnt = 0;
 var firstTime = true;
+var customProcessed = false;
+var customColumns = false;
+var customData = '';
 var totalPulled = 0;
+var csv = null;
 
 //------------------------------------------------------------------------------
 // read parms from program start command
@@ -85,6 +89,9 @@ if (!cfParm) {
 
 initProgram();
 
+//------------------------------------------------------------------------------
+// read configuration file and begin processing
+//------------------------------------------------------------------------------
 function initProgram() {
     // read config file and get parameters to execute
     getConfig()
@@ -97,6 +104,31 @@ function initProgram() {
                     initDBConnections();
                     if (!failedToInit) {
                         console.log('cpul004i - Retrieving data from database');
+ 
+                       // clear the output file 
+                        clearFile()
+                        .then(function(){
+                            //console.log('cpul403i - Output file opened')
+                        })
+                        .catch(function() {
+                            console.log('cpul008e - Failed to open output file, program terminated');
+                            process.exit(-1);
+                        });
+ 
+                        // determine if custom column names are used
+                        checkCustomColumns();
+                        if (customColumns) {
+                            customData = customData + '\n'
+                            appendData(customData)
+                                .then(function(result) {
+                                    firstTime = false;
+                                    console.log('cpul009i - Using custom output column names: ' + data);
+                                })
+                                .catch(function() {
+                                    deferred.reject();
+                                });
+                        }
+
                         getDocs();
                     } else {
                       console.log('cpul005e - Program terminated');
@@ -114,6 +146,10 @@ function initProgram() {
         });
 }
 
+
+//------------------------------------------------------------------------------
+// create db connection 
+//------------------------------------------------------------------------------
 function initDBConnections() {
      failedToInit = false;  
         try {
@@ -126,6 +162,10 @@ function initDBConnections() {
         }
   }
 
+
+//------------------------------------------------------------------------------
+// end of processing stats 
+//------------------------------------------------------------------------------
 function endStats() {
         var endTime = new Date();
         var endMilli = endTime.getTime();
@@ -153,11 +193,17 @@ function millisecondsToTime(milli) {
 }
 
 
+//------------------------------------------------------------------------------
+// pull documents and convert 
+//------------------------------------------------------------------------------
 function getDocs() {       
         getBatch(batchsize, skip)
         .then(function(result) {
             if (typeof dbData[0] !== 'undefined') {
-                convert()
+                // convert data to delimited string
+                convert();
+                // add data to output file
+                appendData(csv)
                 .then(function(result) {
                     skip = skip + batchsize;
                     dbData = [];
@@ -174,6 +220,9 @@ function getDocs() {
 }
 
 
+//------------------------------------------------------------------------------
+// pull batch of documents from database
+//------------------------------------------------------------------------------
 function getBatch(batchsize, skip) {
         cnt = 0;
         var deferred = Q.defer();
@@ -205,28 +254,21 @@ function getBatch(batchsize, skip) {
 }
 
 
+//------------------------------------------------------------------------------
+// convert batch of pulled documents to delimited output
+//------------------------------------------------------------------------------
 function convert() {
-        var deferred = Q.defer();
         var tmp = runConfig.fields;
         var hl = tmp.length;
         var pick = [];
         var msg = '';
         var fld;
-        var fname = runConfig.outputFile;
         var wrtHdr;
         
-        // determine if column header names shoudl be written    
+        // determine if column header names should be written    
         if (firstTime) {
             wrtHdr = true;
             firstTime = false;
-            clearFile()
-            .then(function(){
-                console.log('cpul403i - Output file opened')
-            })
-            .catch(function() {
-                console.log('cpul404e - Failed to open output file, program terminated');
-                process.exit(-1);
-            });
         } else {
             wrtHdr = false;
         }
@@ -252,10 +294,45 @@ function convert() {
         };
 
         // convert JSON data to delimited data
-        var csv = json2csv(opts);
+        csv = json2csv(opts);
+}
+
+
+//------------------------------------------------------------------------------
+// determine if custom column names are defined
+//------------------------------------------------------------------------------
+function checkCustomColumns() {
+        var tmp = runConfig.fields;
+        var name;
+        var data = '';
+        customData = '';
+
+        // build column names
+        for (var i = 0; i < tmp.length; i++) {
+            if (typeof tmp[i].outname !== 'undefined') {
+                name = tmp[i].outname
+                customColumns = true;
+            } else {
+                name = tmp[i].field;
+            }
+
+            if (i === 0) {
+                customData = quote + name + quote;
+            } else {
+                customData = customData + delimiter + quote + name + quote;
+            }
+        }
+}
+
+//------------------------------------------------------------------------------
+// append data to output file
+//------------------------------------------------------------------------------
+function appendData(data) {
+        var deferred = Q.defer();
+        var fname = runConfig.outputFile;
 
         try {
-            fs.appendFile(fname, csv, function(err) {
+            fs.appendFile(fname, data + '\n', function(err) {
                 if (err) { 
                     console.log('cpul406e - Error writing data to output file, message: ' + err)
                     deferred.reject('FAIL');
@@ -265,12 +342,16 @@ function convert() {
             });
             return deferred.promise;
         } catch (e) {
-            console.log('cpul407e - Error initialinzing database, message: ' + e);
+            console.log('cpul407e - Error processing outputfile, message: ' + e);
             failedToInit = true;
             return deferred.reject(e);
         }
 }
 
+
+//------------------------------------------------------------------------------
+// force overwriting of output file by deleting file if it already exists
+//------------------------------------------------------------------------------
 function clearFile() {
     var fname = runConfig.outputFile;
     var data = '';
@@ -292,14 +373,14 @@ function clearFile() {
         });
         return deferred.promise;
     } catch (e) {
-         console.log('cpul411e - Error clearing output file, message: ' + e);
+        console.log('cpul411e - Error clearing output file, message: ' + e);
         return deferred.reject(e);
     }
 }
 
 
 //------------------------------------------------------------------------------
-// read config.json and build / set local vars
+// validate and set processing parameters
 //------------------------------------------------------------------------------
 function loadVars() {
     failedToInit = false;
@@ -467,3 +548,7 @@ function getConfig() {
         deferred.reject(e);
     }
 }
+
+//------------------------------------------------------------------------------
+// end 
+//------------------------------------------------------------------------------
