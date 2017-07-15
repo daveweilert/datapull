@@ -206,7 +206,7 @@ Example:
 
 | Req/Opt | Valid Value(s) | Default | Description |
 | :----:  | -----          | :----:  | -----       |
-| REQ | file name | none | Defines the name of the output file where the CSV data will be written. 
+| Req | file name | none | Defines the name of the output file where the CSV data will be written. 
 
 Example: 
 <br>
@@ -297,17 +297,28 @@ npm start C:\Users\daveweilert\files\config.json
 
 Example console output: 
 ================================================================================
-    pull0000i - Looking for configuration file
-    pull0002i - Parameter "inputDB" located
-    pull0002i - Parameter "inputDB.dbname" tweets
-    pull0002i - Parameter "inputDB.url" https://bluemix.cloudant.com
-    pull0002i - Parameter "outputFile" data.csv
-    pull0002i - Parameter "fields" [{"field":"payload.tweet"},{"field":"payload.score"},{"field":"payload.location"}]
-    pull0012i - Initialized DB: tweets
-    pull4000i - Retrieving data from database
-    pull4001i - DB Record count: 41441
-    pull0020i - Output to CSV file: data.csv  -  fields: payload.tweet payload.score payload.location
-    pull00221 - Output complete 
+      pull000i - Looking for configuration file
+      pull002i - Parameter "database" located
+      pull002i - Parameter "database.dbname" value is: tweets
+      pull002i - Parameter "database.url" value is: https://bluemix.cloudant.com
+      pull002i - Parameter "outputFile" value is: data.csv
+      pull002i - Parameter "delimiter" value is: tab
+      pull002i - Parameter "quote" value is: double
+      pull002i - Parameter "fields" value is: [{"field":"payload.tweet", ... }]
+      pull012i - Initialized DB: tweets
+      pull080i - Retrieving data from database
+      pull041i - Cleared outupt file data.csv
+      pull004i - Output file opened
+      pull400i - Total database records pulled: 5000
+      pull400i - Total database records pulled: 10000
+      pull400i - Total database records pulled: 15000
+      pull400i - Total database records pulled: 20000
+      pull400i - Total database records pulled: 25000
+      pull400i - Total database records pulled: 30000
+      pull400i - Total database records pulled: 35000
+      pull400i - Total database records pulled: 40000
+      pull400i - Total database records pulled: 42988
+      pull006i - Data pull complete
 
 
 
