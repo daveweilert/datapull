@@ -23,8 +23,8 @@ SOFTWARE.
 //------------------------------------------------------------------------------
 // Require statements and vars
 //------------------------------------------------------------------------------
-var  fs           = require('fs');
-var Q             = require('q');
+var  fs = require('fs');
+var Q = require('q');
 var json2csv = require('json2csv');
 
 // Global vars
@@ -139,7 +139,7 @@ function endStats() {
         console.log('cpul903i - Average Time/Record       : ' + avgTimePerRec + ' milliseconds');
 
         // end the load program
-        console.log('cpul999i - Program completed');
+        console.log('cpul999i - Program completed\n');
 }
 
 //------------------------------------------------------------------------------
