@@ -194,9 +194,14 @@ function clearFile() {
     var deferred = Q.defer();
     try {
         fs.unlink(fname, function(err) {
-            if (err) { 
-                console.log('pull040e - Error clearing output file, message: ' + err)
-                deferred.reject('FAIL');
+            if (err) {
+                    if (err.code === 'ENOENT') { 
+                            console.log('pull041i - Cleared outupt file ' + fname);
+                            deferred.resolve('OK'); 
+                    } else {
+                            console.log('pull040e - Error clearing output file, message: ' + err)
+                            deferred.reject('FAIL');
+                }
             } else {
                 console.log('pull041i - Cleared outupt file ' + fname);
                 deferred.resolve('OK'); 
@@ -208,6 +213,7 @@ function clearFile() {
         return deferred.reject(e);
     }
 }
+
 
 //------------------------------------------------------------------------------
 // read config.json and build / set local vars
